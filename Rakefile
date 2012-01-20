@@ -7,6 +7,8 @@ begin
     gemspec.email = "m.campana@gmail.com"
     gemspec.homepage = "http://github.com/marcocampana/git-notifier"
     gemspec.authors = ["Marco Campana"]
+    gemspec.add_dependency 'daemons'
+    gemspec.add_dependency 'ruby_gntp'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
