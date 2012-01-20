@@ -7,13 +7,13 @@
 
 require 'rubygems'
 require 'daemons'
-require 'ruby-growl'
+require 'ruby_gntp'
 require 'digest/sha1'
 
-def usage 
+def usage
   usage = <<END
 
-  Usage: 
+  Usage:
   ------
 
   git-notifier start|stop|add|clear|status
@@ -101,10 +101,14 @@ end
 
 def demonize
   Daemons.run_proc('git-notifier', :dir_mode => :normal, :dir => '/var/tmp/', :monitor => false) do
-    g = Growl.new "localhost", "ruby-growl", ["git-notifier"]
-
     # TODO this welcome message needs to be prettier like number of watched repositories for instance
-    g.notify("git-notifier", "GIT Notifier", "Start notifier")
+
+    GNTP.notify({
+      :app_name => "Git notifier",
+      :title    => "Git notifier",
+      :text     => "Git notifier - Started",
+      :icon     => "http://andyjeffries.co.uk/uploads/articles/33/view_git-logo.png?1258471726"
+    })
 
     loop do
       # TODO store available_repoes in a variable if adding while running doesn't work
@@ -127,7 +131,12 @@ def demonize
           # TODO truncate commit sha1 and author name stripping off email
 
           # TODO put the name of the repo as title
-          g.notify("git-notifier", sha1 + date, author + "\n" + body, 0, true)
+          GNTP.notify({
+            :app_name => "Git notifier",
+            :title    => sha1 + date,
+            :text     => author + "\n" + body,
+            :icon     => "http://andyjeffries.co.uk/uploads/articles/33/view_git-logo.png?1258471726"
+          })
         end
         # TODO increase sleep time
         sleep(60)

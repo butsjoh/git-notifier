@@ -9,6 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marco Campana"]
+  gemspec.add_dependency 'daemons'
+  gemspec.add_dependency 'ruby_gntp'
   s.date = %q{2009-10-18}
   s.default_executable = %q{git-notifier}
   s.description = %q{git-notifier is a gem for Mac Os that allows you to watch one or more git repositories and receive a growl notification when a change is committed}
